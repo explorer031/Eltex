@@ -4,20 +4,8 @@
 #include <unistd.h>
 
 
-void usage_check(int argc, char* argv[])
+int main()
 {
-   if (argc != 2 || atoi(argv[1]) < 0)
-   {
-      printf("Usage: %s <positive integer>\n\n", argv[0]);
-      exit(1);
-   }
-};
-
-
-int main(int argc, char* argv[])
-{
-   usage_check(argc, argv);
-
    int fd_fifo = 0;
    /* open FIFO for reading and writing */
    if ((fd_fifo = open("2_10_fifo", O_RDONLY)) == -1)
@@ -26,12 +14,16 @@ int main(int argc, char* argv[])
       exit(2);
    }
 
-   int number = atoi(argv[1]);
-   for (int i = 0; i < number; ++i)
+   unsigned char stop = 0;
+   while (!stop)
    {
       int random = 0;
-      if (read(fd_fifo, &random, sizeof(int)) != -1)
+      ssize_t readed = read(fd_fifo, &random, sizeof(int));
+      
+      if (readed != -1 && readed != 0)
          printf("%d\n", random);
+      else
+         stop = 1;
    }
 
    close(fd_fifo);
