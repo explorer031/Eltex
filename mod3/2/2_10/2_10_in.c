@@ -21,11 +21,8 @@ int main(int argc, char* argv[])
 {
    usage_check(argc, argv);
 
-   /* if FIFO exists - delete it */
-   unlink("2_10_fifo");
-
    /* create FIFO */
-   if (mkfifo("2_10_fifo", S_IRWXU | S_IRWXG | S_IRWXO) == -1)
+   if (access("2_10_fifo", F_OK) && mkfifo("2_10_fifo", S_IRWXU | S_IRWXG | S_IRWXO) == -1)
    {
       perror("Unable to create FIFO\n");
       exit(1);
@@ -43,8 +40,11 @@ int main(int argc, char* argv[])
    int number = atoi(argv[1]);
    for (int i = 0; i < number; ++i)
    {
-      int random = rand() % 100;
+      int random = rand() % 1000;
+      printf("%d\n", random);
       write(fd_fifo, &random, sizeof(int));
+      
+      sleep(1);
    }
 
    close(fd_fifo);
