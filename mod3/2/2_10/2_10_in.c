@@ -33,7 +33,7 @@ int main(int argc, char* argv[])
 
    int fd_fifo = 0;
    /* open FIFO for writing */
-   if ((fd_fifo = open("2_10_fifo", O_NONBLOCK, O_WRONLY)) == -1)
+   if ((fd_fifo = open("2_10_fifo", O_WRONLY)) == -1)
    {
       perror("Unable to open FIFO\n");
       exit(2);
