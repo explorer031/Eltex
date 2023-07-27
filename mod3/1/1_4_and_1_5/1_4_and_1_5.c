@@ -10,7 +10,7 @@ int main()
 {
    while (1)
    {
-      printf("\n>>> Enter the command: ");
+      printf("\n>>> ");
 
       static char path[255] = { 0 };
       scanf("%s", path);
