@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>     /* exit */
+#include <signal.h>
 #include <sys/types.h>  /* pid_t */
 #include <fcntl.h>      /* open() mods */
 #include <time.h>       /* time */
