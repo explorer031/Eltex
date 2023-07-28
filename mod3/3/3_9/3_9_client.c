@@ -85,7 +85,7 @@ int main()
 
    puts("----------------------------------------------");
    puts("Type Ctrl+Z to enter your message.");
-   puts("Type Ctrl+C to stop communicating and delete the message queue.");
+   puts("Type Ctrl+C to stop communicating and delete the message queue.\n");
    signal(SIGTSTP, sigtstp_handler);
    signal(SIGINT, sigint_handler);
 
@@ -96,7 +96,7 @@ int main()
       while (!end_flag)
       {
          if (msgrcv(msqid, &buf, sizeof(buf.msg_data), uid, IPC_NOWAIT) != -1)
-            printf("\n%s: %s\n",buf.msg_data.from_whom, buf.msg_data.text);
+            printf("%s: %s\n\n",buf.msg_data.from_whom, buf.msg_data.text);
       }
       
       /* entering client's message */
@@ -104,9 +104,10 @@ int main()
       buf.msg_data.id = uid;
       strcpy(buf.msg_data.from_whom, username);
 
-      printf("\nYou: ");
+      printf(" You: ");
       fgets(buf.msg_data.text, sizeof(buf.msg_data.text), stdin);
       buf.msg_data.text[strlen(buf.msg_data.text) - 1] = '\0';
+      puts("");
 
       /* sending our message */
       if (msgsnd(msqid, &buf, sizeof(buf.msg_data), IPC_NOWAIT) == -1)
