@@ -53,5 +53,8 @@ int main()
 
    printf("File received successfully.\n");
 
-   return 0;
+   close(sockfd);
+   close(new_sock);
+   
+   exit(EXIT_SUCCESS);
 }
